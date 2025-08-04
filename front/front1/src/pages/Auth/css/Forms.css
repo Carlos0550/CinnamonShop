@@ -1,0 +1,47 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 2rem;
+  }
+  
+  .login-box {
+    width: 100%;
+    max-width: 400px;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid #d7dcee;
+    box-shadow: 0 10px 25px rgba(43, 41, 61, 0.1);
+  }
+  
+  .login-title {
+    text-align: center;
+    color: #2b293d;
+    margin-bottom: 1.5rem;
+  }
+  
+  .ant-btn-primary {
+    background-color: #8080c0;
+    border-color: #8080c0;
+  }
+  
+  .ant-btn-primary:hover {
+    background-color: #6d6bb0;
+    border-color: #6d6bb0;
+  }
+  
+  a {
+    display: block;
+    text-align: center;
+    color: #7a75b6;
+    font-size: 0.9rem;
+  }
+  
+
+.form-subtitle{
+  color: #8080c0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}

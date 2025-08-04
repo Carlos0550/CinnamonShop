@@ -1,0 +1,112 @@
+.product-variants-preview {
+  margin-top: 20px;
+}
+
+.product-variants-preview .ant-card-head {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.product-variants-preview .ant-card-head-title {
+  font-weight: 600;
+  color: #262626;
+}
+
+.variants-table {
+  margin-top: 16px;
+}
+
+.variants-table .ant-table-thead > tr > th {
+  background-color: #fafafa;
+  font-weight: 600;
+  color: #262626;
+}
+
+.variant-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.variant-sku {
+  font-size: 12px;
+  color: #8c8c8c;
+}
+
+.stock-display-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stock-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  padding: 2px;
+}
+
+.stock-value {
+  min-width: 30px;
+  text-align: center;
+  font-weight: 500;
+  color: #262626;
+}
+
+.stock-edit-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.stock-edit-container .ant-input-number {
+  width: 80px;
+}
+
+.stock-edit-container .ant-btn {
+  height: 28px;
+  padding: 0 8px;
+  font-size: 12px;
+}
+
+/* Estados de stock */
+.stock-value.low {
+  color: #ff4d4f;
+  font-weight: 600;
+}
+
+.stock-value.medium {
+  color: #faad14;
+  font-weight: 600;
+}
+
+.stock-value.high {
+  color: #52c41a;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stock-display-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .stock-controls {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .stock-edit-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .stock-edit-container .ant-btn {
+    width: 100%;
+  }
+} 

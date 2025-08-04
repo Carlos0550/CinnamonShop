@@ -1,0 +1,69 @@
+# Dependencias
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos de construcción
+dist
+build
+.next
+.nuxt
+.vuepress/dist
+
+# Archivos de desarrollo
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs
+*.log
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Archivos de Git
+.git
+.gitignore
+
+# Archivos de Docker
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Archivos de testing
+coverage
+.nyc_output
+
+# Archivos temporales
+tmp
+temp
+
+# Archivos de cache
+.cache
+.parcel-cache
+
+# Archivos de Prisma (excepto schema y migrations)
+prisma/migrations/*/migration.sql
+!prisma/schema.prisma
+!prisma/migrations/
+
+# Archivos de documentación
+README.md
+docs/
+
+# Archivos de configuración de desarrollo
+.eslintrc*
+.prettierrc*
+jest.config.*
+tsconfig.json 

@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  firstName String
+  lastName  String
+  role      UserRole @default(CUSTOMER)
+  isActive  Boolean  @default(true)
+  profileImageUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  onBoarding Boolean @default(false)
+
+  @@map("users")
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String   @db.Text
+  imageUrl    String?
+  imagePath   String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relaciones
+  products Product[]
+
+  @@map("categories")
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  price       Decimal  @db.Decimal(10, 2)
+  stock       Int      @default(0)
+  sku         String   @unique
+  brand       String
+  isActive    Boolean  @default(true)
+  categoryId  String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  category     Category       @relation(fields: [categoryId], references: [id])
+  images       ProductImage[]
+  options      ProductOption[]
+  optionStock  ProductOptionStock[]
+
+  @@map("products")
+}
+
+model ProductOption {
+  id        String   @id @default(cuid())
+  name      String   // Nombre de la opción (ej: "Color", "Talla")
+  values    String[] // Array de valores (ej: ["Rojo", "Verde", "Azul"])
+  productId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relaciones
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("product_options")
+}
+
+model ProductOptionStock {
+  id        String   @id @default(cuid())
+  productId String
+  optionName String  // Nombre de la opción (ej: "Color")
+  optionValue String // Valor de la opción (ej: "Rojo")
+  stock     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relaciones
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, optionName, optionValue])
+  @@map("product_option_stock")
+}
+
+model ProductImage {
+  id        String   @id @default(cuid())
+  url       String
+  alt       String?
+  isPrimary Boolean  @default(false)
+  productId String
+  createdAt DateTime @default(now())
+
+  // Relaciones
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("product_images")
+}
+
+enum UserRole {
+  ADMIN
+  CUSTOMER
+}

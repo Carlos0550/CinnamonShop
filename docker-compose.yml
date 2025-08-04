@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  # Backend API
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: cinnamonshop_backend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      PORT: 5001
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET:-your_jwt_secret_here_change_in_production}
+      JWT_EXPIRES_IN: 7d
+      SUPABASE_API: ${SUPABASE_API}
+      SUPABASE_SECRET: ${SUPABASE_SECRET}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3000,http://localhost:5173}
+      ENVIRONMENT: ${NODE_ENV:-production}
+      MAX_FILE_SIZE: 5242880
+      ALLOWED_FILE_TYPES: image/jpeg,image/png,image/webp
+      RATE_LIMIT_WINDOW_MS: 900000
+      RATE_LIMIT_MAX_REQUESTS: 100
+      EMAIL_USER: ${EMAIL_USER}
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+      EMAIL_FROM_NAME: Cinnamon Shop
+      EMAIL_FROM_EMAIL: noreply@cinnamonshop.com
+      EMAIL_LOGIN_URL: ${EMAIL_LOGIN_URL:-http://localhost:3000/auth}
+      EMAIL_RESET_PASSWORD_URL: ${EMAIL_RESET_PASSWORD_URL:-http://localhost:3000/auth/reset-password}
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    networks:
+      - cinnamonshop_network
+
+  # Frontend React
+  frontend:
+    build:
+      context: ./front/front1
+      dockerfile: Dockerfile
+    container_name: cinnamonshop_frontend
+    restart: unless-stopped
+    environment:
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:5000/api}
+      VITE_SUPABASE_URL: ${SUPABASE_API}
+      VITE_SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY}
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./front/front1:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - cinnamonshop_network
+
+networks:
+  cinnamonshop_network:
+    driver: bridge 

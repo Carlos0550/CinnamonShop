@@ -1,0 +1,13 @@
+.layout-container{
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    
+}
+
+.layout-content{
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+}

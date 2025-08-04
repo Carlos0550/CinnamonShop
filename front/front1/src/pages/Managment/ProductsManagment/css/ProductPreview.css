@@ -1,0 +1,143 @@
+.product-preview-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.image-card,
+.info-card,
+.description-card,
+.options-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.main-image-container {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.image-info {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}
+
+.additional-images {
+  margin-top: 16px;
+}
+
+.additional-images h4 {
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.image-item {
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.image-item:hover {
+  transform: scale(1.05);
+}
+
+.no-images {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+}
+
+.product-description {
+  line-height: 1.6;
+  color: #333;
+}
+
+.product-description h1,
+.product-description h2,
+.product-description h3,
+.product-description h4,
+.product-description h5,
+.product-description h6 {
+  margin-top: 16px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.product-description p {
+  margin-bottom: 12px;
+}
+
+.product-description ul,
+.product-description ol {
+  margin-bottom: 12px;
+  padding-left: 20px;
+}
+
+.product-description li {
+  margin-bottom: 4px;
+}
+
+.option-item {
+  margin-bottom: 16px;
+  padding: 12px;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  background: #fafafa;
+}
+
+.option-item h4 {
+  margin: 0 0 8px 0;
+  color: #333;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.option-values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .product-preview-container {
+    padding: 16px;
+  }
+  
+  .preview-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  
+  .header-actions {
+    justify-content: center;
+  }
+  
+  .image-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 8px;
+  }
+} 

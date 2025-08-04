@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido a {{companyName}}</title>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h1 style="color: #8B4513; margin-bottom: 10px;">🎉 ¡Bienvenido a {{companyName}}!</h1>
+        <p style="font-size: 18px; color: #666;">Tu cuenta ha sido creada exitosamente</p>
+    </div>
+
+    <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+        <h2 style="color: #8B4513; margin-top: 0;">Hola {{userFirstName}},</h2>
+        
+        <p>¡Nos emociona darte la bienvenida a {{companyName}}! Tu cuenta ha sido creada exitosamente y ya puedes comenzar a explorar todos nuestros productos de belleza.</p>
+        
+        <p>Para acceder a tu cuenta, utiliza las siguientes credenciales:</p>
+        
+        <div style="background-color: #fff; padding: 15px; border-left: 4px solid #8B4513; margin: 20px 0;">
+            <p style="margin: 5px 0;"><strong>Email:</strong> {{userEmail}}</p>
+            <p style="margin: 5px 0;"><strong>Contraseña temporal:</strong> <code style="background-color: #f0f0f0; padding: 2px 6px; border-radius: 3px;">{{generatedPassword}}</code></p>
+        </div>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="{{loginUrl}}" style="background-color: #8B4513; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block; font-weight: bold;">Iniciar Sesión</a>
+        </div>
+    </div>
+
+    <div style="background-color: #fff3cd; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #ffc107;">
+        <h3 style="color: #856404; margin-top: 0;">⚠️ Importante</h3>
+        <p style="margin-bottom: 10px;">Por seguridad, te recomendamos cambiar tu contraseña después de completar el proceso de onboarding.</p>
+        <p style="margin: 0;">Puedes hacerlo desde tu perfil una vez que hayas iniciado sesión.</p>
+    </div>
+
+    <div style="background-color: #e7f3ff; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+        <h3 style="color: #0c5460; margin-top: 0;">🚀 Próximos pasos</h3>
+        <ul style="margin: 10px 0; padding-left: 20px;">
+            <li>Completa tu perfil de usuario</li>
+            <li>Explora nuestras categorías de productos</li>
+            <li>Configura tus preferencias de envío</li>
+            <li>Cambia tu contraseña por una más segura</li>
+        </ul>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;">
+        <p style="color: #666; margin-bottom: 10px;">¿Tienes alguna pregunta?</p>
+        <p style="margin: 0;">Contáctanos en <a href="mailto:{{supportEmail}}" style="color: #8B4513;">{{supportEmail}}</a></p>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee;">
+        <p style="color: #999; font-size: 12px; margin: 0;">
+            © 2024 {{companyName}}. Todos los derechos reservados.
+        </p>
+    </div>
+
+</body>
+</html> 
