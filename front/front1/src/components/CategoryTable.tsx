@@ -28,7 +28,6 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
 }) => {
   const [previewVisible, setPreviewVisible] = useState(false)
   const [previewImage, setPreviewImage] = useState('')
-  console.log(categories)
   const handleImagePreview = (imageUrl: string) => {
     setPreviewImage(imageUrl)
     setPreviewVisible(true)
@@ -174,7 +173,9 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
   ]
 
   return (
-    <div className="category-table-container">
+    <div className="category-table-container"  style={{
+      overflowY: "scroll"
+    }}>
       <div className="table-header">
         <h3>Categorías ({categories.length})</h3>
         <Button
@@ -189,6 +190,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
 
       <Table
         columns={columns}
+       
         dataSource={categories}
         loading={loading}
         rowKey="id"
@@ -200,6 +202,10 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
             `${range[0]}-${range[1]} de ${total} categorías`,
         }}
         className="category-table"
+        scroll={{
+          x:800,
+        
+        }}
       />
 
       <Modal

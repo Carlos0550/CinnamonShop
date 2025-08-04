@@ -1,46 +1,34 @@
 import { useAppContext } from "@/context/AppContext"
-import "./css/Layout.css"
+import "./css/Navbar.css"
 import { useState, useEffect } from "react"
-import { Spin } from "antd"
-import { LoadingOutlined } from "@ant-design/icons"
+
 import { Link, useLocation } from "react-router-dom"
+import { MenuOutlined, CloseOutlined } from "@ant-design/icons"
 
 function Navbar() {
   const location = useLocation()
-  
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
+
   const links = [
-    {name: "Productos", emoji: "💄", path: "/managment/products"},
-    {name: "Categorías", emoji: "📂", path: "/managment/categories"},
-    {name: "Banners", emoji: "🖼️", path: "/managment/banners"},
-    {name: "Promociones", emoji: "🎉", path: "/managment/promotions"},
-    {name: "Gestión", emoji: "⚙️", path: "/managment/settings"},
+    { name: "Productos", emoji: "💄", path: "/managment/products" },
+    { name: "Categorías", emoji: "📂", path: "/managment/categories" },
+    { name: "Banners", emoji: "🖼️", path: "/managment/banners" },
+    { name: "Promociones", emoji: "🎉", path: "/managment/promotions" },
+    { name: "Gestión", emoji: "⚙️", path: "/managment/settings" },
   ]
 
   const {
-    authHooks:{
+    authHooks: {
       authData
-    }
+    },
+    width
   } = useAppContext()
 
-  const [generatingPhoto, setGeneratingPhoto] = useState(true)
-  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null)
-  const [progress, setProgress] = useState(0)
-
-  const generateDinamicPhoto = async(user_name: string) => {
-    setGeneratingPhoto(true)
+  const [isMobile] = useState<boolean>(width < 768)
+  const [defaultPhoto, setDefaultPhoto] = useState<string>("")
+  
+  const getDefaultPhoto = async (user_name: string) => {
     try {
-      setProgress(0)
-      
-      const progressInterval = setInterval(() => {
-        setProgress(prev => {
-          if (prev >= 100) {
-            clearInterval(progressInterval)
-            return 100
-          }
-          return prev + 10
-        })
-      }, 100)
-
       const url = new URL("https://ui-avatars.com/api")
       url.searchParams.append("name", encodeURI(user_name))
       url.searchParams.append("background", "0D8ABC")
@@ -49,57 +37,57 @@ function Navbar() {
       const response = await fetch(url.toString())
       const blob = await response.blob()
       const imageUrl = URL.createObjectURL(blob)
-      
-      setTimeout(() => {
-        setProfileImageUrl(imageUrl)
-        setGeneratingPhoto(false)
-        setProgress(0)
-      }, 1000)
-      
+      setDefaultPhoto(imageUrl)
+      console.log("defaultPhoto: ", imageUrl)
     } catch (error) {
       console.error("Error generando foto dinámica:", error)
-      setGeneratingPhoto(false)
-      setProgress(0)
     }
   }
 
   useEffect(() => {
     if (!authData.profileImageUrl) {
       const fullName = `${authData.firstName} ${authData.lastName || ""}`.trim()
-      generateDinamicPhoto(fullName)
-    } else if (authData.profileImageUrl) {
-      setProfileImageUrl(authData.profileImageUrl)
-    } 
+      getDefaultPhoto(fullName)
+    } else {
+      setDefaultPhoto(authData.profileImageUrl)
+    }
   }, [authData.profileImageUrl])
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen)
+  }
+
+  const closeMenu = () => {
+    setIsMenuOpen(false)
+  }
 
   return (
     <div className="sidebar-container">
       <div className="sidebar-logo-container">
         <picture className="sidebar-logo">
-          {generatingPhoto ? (
-            <Spin
-              size="large"
-              indicator={<LoadingOutlined style={{ fontSize: 24, color: 'white' }} spin />}
-              percent={progress}
-            />
-          ) : (
-            <img 
-              src={profileImageUrl || "/default-avatar.png"} 
-              alt="logo" 
-              onError={(e) => {
-                const target = e.target as HTMLImageElement
-                target.src = "/default-avatar.png"
-              }}
-            />
-          )}
+          <img
+            src={defaultPhoto}
+            alt="logo"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement
+              target.src = "/default-avatar.png"
+            }}
+          />
         </picture>
-        <p>Cinnamon Manager</p>
+        <p>{authData.firstName} {authData.lastName}</p>
+        
+        {isMobile && (
+          <button className="menu-toggle" onClick={toggleMenu}>
+            {isMenuOpen ? <CloseOutlined /> : <MenuOutlined />}
+          </button>
+        )}
       </div>
+
       <div className="links-container">
         <ul className="sidebar-links">
           {links.map((link, index) => (
             <li key={index} className={`sidebar-link ${location.pathname.startsWith(link.path) ? "active" : ""}`}>
-              <Link to={link.path} className="link-content">
+              <Link to={link.path} className="link-content" onClick={isMobile ? closeMenu : undefined}>
                 <span className="emoji">{link.emoji}</span>
                 <span className="link-text">{link.name}</span>
               </Link>
@@ -107,6 +95,21 @@ function Navbar() {
           ))}
         </ul>
       </div>
+
+      {isMobile && (
+        <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
+          <ul className="sidebar-links">
+            {links.map((link, index) => (
+              <li key={index} className={`sidebar-link ${location.pathname.startsWith(link.path) ? "active" : ""}`}>
+                <Link to={link.path} className="link-content" onClick={closeMenu}>
+                  <span className="emoji">{link.emoji}</span>
+                  <span className="link-text">{link.name}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   )
 }

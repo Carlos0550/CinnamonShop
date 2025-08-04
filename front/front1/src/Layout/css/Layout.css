@@ -11,3 +11,10 @@
 
     flex: 1;
 }
+
+
+@media(max-width:768px){
+    .layout-container{
+        flex-direction: column;
+    }
+}

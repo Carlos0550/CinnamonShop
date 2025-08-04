@@ -20,6 +20,15 @@
     gap: 1rem;
 }
 
+@media(max-width: 768px){
+    .form-container{
+        width: 100%;
+    }
+    .auth-container{
+        padding: 1rem;
+    }
+}
+
 .form-title {
     text-align: center;
     font-size: 1.3rem;
