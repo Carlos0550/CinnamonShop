@@ -11,6 +11,8 @@ export const config = {
   
   jwtSecret: process.env['JWT_SECRET']!,
   jwtExpiresIn: process.env['JWT_EXPIRES_IN'] || '7d',
+
+  ideogram_api_key: process.env['IDEOGRAM_API_KEY'] ,
   
   supabase: {
     api: process.env['SUPABASE_API']!,
@@ -32,7 +34,7 @@ export const config = {
   },
   
   cors: {
-    origin: process.env['CORS_ORIGIN']?.split(',') || ['*'],
+    origin: ['http://localhost:3000', 'http://localhost:5173', 'http://localhost:4321'],
   },
   
   email: {
@@ -47,13 +49,14 @@ export const config = {
     resetPasswordUrl: process.env['EMAIL_RESET_PASSWORD_URL'] || 'http://localhost:5173/auth/reset-password',
     supportEmail: process.env['EMAIL_FROM_EMAIL'],
   },
-} as const;
+};
 
 const requiredEnvVars = [
   'DATABASE_URL',
   'JWT_SECRET',
   "SUPABASE_API",
-  "SUPABASE_SECRET"
+  "SUPABASE_SECRET",
+  "IDEOGRAM_API_KEY"
 ];
 
 for (const envVar of requiredEnvVars) {

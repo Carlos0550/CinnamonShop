@@ -1,5 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 
 generator client {
   provider = "prisma-client-js"
@@ -36,7 +35,6 @@ model Category {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  // Relaciones
   products Product[]
 
   @@map("categories")
@@ -65,13 +63,12 @@ model Product {
 
 model ProductOption {
   id        String   @id @default(cuid())
-  name      String   // Nombre de la opción (ej: "Color", "Talla")
-  values    String[] // Array de valores (ej: ["Rojo", "Verde", "Azul"])
+  name      String   
+  values    String[] 
   productId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Relaciones
   product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@map("product_options")
@@ -80,13 +77,12 @@ model ProductOption {
 model ProductOptionStock {
   id        String   @id @default(cuid())
   productId String
-  optionName String  // Nombre de la opción (ej: "Color")
-  optionValue String // Valor de la opción (ej: "Rojo")
+  optionName String  
+  optionValue String 
   stock     Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Relaciones
   product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@unique([productId, optionName, optionValue])
@@ -101,13 +97,152 @@ model ProductImage {
   productId String
   createdAt DateTime @default(now())
 
-  // Relaciones
   product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@map("product_images")
+}
+
+model Banner {
+  id          String   @id @default(cuid())
+  imageUrl    String
+  imagePath   String
+  isClickable Boolean  @default(false)
+  actionType  Json?    // Para acciones como redirigir a producto, categoría, etc.
+  from        DateTime? // Fecha de inicio de vigencia
+  to          DateTime? // Fecha de fin de vigencia
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("banners")
 }
 
 enum UserRole {
   ADMIN
   CUSTOMER
 }
+
+enum IntegrationType {
+  AI_TEXT_GENERATION
+  AI_IMAGE_GENERATION
+  AI_ANALYSIS
+  EMAIL_SERVICE
+  PAYMENT_PROCESSOR
+  SHIPPING_CARRIER
+  OTHER
+}
+
+enum PlanType {
+  FREE
+  BASIC
+  PRO
+  ENTERPRISE
+  CUSTOM
+}
+
+model Integration {
+  id                String           @id @default(cuid())
+  name              String           @unique
+  displayName       String
+  description       String?          @db.Text
+  type              IntegrationType
+  provider          String          
+  apiEndpoint       String?
+  isEnabled         Boolean          @default(true)
+  isActive          Boolean          @default(true)
+  
+  currentPlan       PlanType         @default(FREE)
+  planDetails       Json?            
+  
+  totalCredits      Decimal          @db.Decimal(15, 4) @default(0)
+  usedCredits       Decimal          @db.Decimal(15, 4) @default(0)
+  availableCredits  Decimal          @db.Decimal(15, 4) @default(0)
+  
+  monthlyLimit      Decimal?         @db.Decimal(15, 4)
+  dailyLimit        Decimal?         @db.Decimal(15, 4)
+  
+  requestTypes      RequestType[]
+  usageLogs         IntegrationUsageLog[]
+  
+  totalRequests     Int              @default(0)
+  successfulRequests Int             @default(0)
+  failedRequests    Int              @default(0)
+  
+  lastUsed          DateTime?
+  lastBillingDate   DateTime?
+  nextBillingDate   DateTime?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  
+  
+  @@map("integrations")
+}
+
+model RequestType {
+  id              String      @id @default(cuid())
+  integrationId   String
+  name            String      // Ej: "text-generation", "image-generation", "analysis"
+  displayName     String      // Ej: "Generación de Texto", "Generación de Imagen"
+  description     String?
+  
+  costPerRequest  Decimal     @db.Decimal(10, 6) 
+  costPerToken    Decimal?    @db.Decimal(10, 6) 
+  
+  maxTokens       Int?        
+  maxImages       Int?        
+  maxRequestsPerDay Int?      
+  
+  isEnabled       Boolean     @default(true)
+  requiresAuth    Boolean     @default(true)
+  
+  integration     Integration @relation(fields: [integrationId], references: [id], onDelete: Cascade)
+  usageLogs       IntegrationUsageLog[]
+  
+  @@unique([integrationId, name])
+  @@map("request_types")
+}
+
+model IntegrationUsageLog {
+  id              String      @id @default(cuid())
+  integrationId   String
+  requestTypeId   String?
+  userId          String?
+  
+  // Detalles del request
+  requestTypeName String      // Nombre del tipo de request
+  requestData     Json?       // Datos del request (prompt, parámetros, etc.)
+  responseData    Json?       // Respuesta de la API
+  
+  // Costos y créditos
+  creditsUsed     Decimal     @db.Decimal(15, 4)
+  costInUSD       Decimal     @db.Decimal(10, 4)
+  
+  // Métricas del request
+  tokensUsed      Int?        // Para APIs de texto
+  imagesGenerated Int?        // Para APIs de imagen
+  processingTime  Int?        // Tiempo de procesamiento en ms
+  
+  // Estado del request
+  status          RequestStatus
+  errorMessage    String?     @db.Text
+  
+  // Timestamps
+  requestedAt     DateTime    @default(now())
+  completedAt     DateTime?
+  
+  // Relaciones
+  integration     Integration @relation(fields: [integrationId], references: [id], onDelete: Cascade)
+  requestType     RequestType? @relation(fields: [requestTypeId], references: [id])
+  
+  @@map("integration_usage_logs")
+}
+
+enum RequestStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+  RATE_LIMITED
+}
+

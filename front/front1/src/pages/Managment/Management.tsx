@@ -6,6 +6,8 @@ import ProductPreview from "./ProductsManagment/ProductPreview"
 import CategoriesManagment from "./CategoriesManagment/CategoriesManagment"
 import AddCategory from "./CategoriesManagment/AddCategory"
 import EditCategory from "./CategoriesManagment/EditCategory"
+import BannersManagment from "./BannersManagment/BannersManagment"
+import AddBanner from "./BannersManagment/Components/AddBanner"
 
 function Management() {
   return (
@@ -20,6 +22,9 @@ function Management() {
       <Route path="/categories" element={<CategoriesManagment />} />
       <Route path="/categories/new" element={<AddCategory />} />
       <Route path="/categories/edit/:id" element={<EditCategory />} />
+
+      <Route path="/banners" element={<BannersManagment/>}/>
+      <Route path="/banners/new" element={<AddBanner onBannerAdded={() => {}} onCancel={() => {}}/>}/>
     </Routes>
   )
 }

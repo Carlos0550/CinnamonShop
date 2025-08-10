@@ -1,0 +1,302 @@
+.hero-banner {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  /* Removemos overflow: hidden para que el contenido sea visible */
+  margin-bottom: 2rem;
+}
+
+/* Para pantallas muy grandes, aumentar la altura */
+@media (min-width: 1600px) {
+  .hero-banner {
+    height: 500px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .hero-banner {
+    height: 600px;
+  }
+}
+
+/* Para pantallas ultra-wide, optimizar el banner */
+@media (min-width: 2560px) {
+  .hero-banner {
+    height: 700px;
+  }
+  
+  .banner-nav {
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+  }
+  
+  .banner-overlay {
+    padding: 3rem;
+  }
+  
+  .banner-cta {
+    padding: 16px 32px;
+    font-size: 1.2rem;
+  }
+}
+
+.hero-banner.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.banner-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.banner-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.banner-slide.active {
+  opacity: 1;
+}
+
+.banner-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.banner-overlay {
+  background: rgba(0, 0, 0, 0.6); /* Aumentamos la opacidad para mejor legibilidad */
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  backdrop-filter: blur(10px); /* Este es el "centro difuminado" que mencionaste */
+  max-width: 90%; /* Limitamos el ancho para mejor legibilidad */
+  margin: 0 auto;
+}
+
+/* Agregamos estilos para el título y descripción del banner */
+.banner-title {
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.banner-description {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  line-height: 1.4;
+}
+
+.banner-cta {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.banner-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.banner-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.banner-nav:hover {
+  background: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.banner-prev {
+  left: 20px;
+}
+
+.banner-next {
+  right: 20px;
+}
+
+.banner-indicators {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.indicator.active {
+  background: white;
+  transform: scale(1.2);
+}
+
+.indicator:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-banner {
+    height: 300px;
+  }
+
+  .banner-nav {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .banner-prev {
+    left: 10px;
+  }
+
+  .banner-next {
+    right: 10px;
+  }
+
+  .banner-overlay {
+    padding: 1.5rem;
+    max-width: 95%; /* En móviles ocupamos más ancho */
+  }
+
+  .banner-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .banner-description {
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .banner-cta {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-banner {
+    height: 250px;
+  }
+
+  .banner-nav {
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+  }
+
+  .banner-overlay {
+    padding: 1rem;
+    max-width: 98%;
+  }
+
+  .banner-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .banner-description {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .banner-cta {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Optimizaciones para pantallas muy grandes */
+@media (min-width: 980) {
+  .banner-overlay {
+    max-width: 80%;
+  }
+  
+  .banner-title {
+    font-size: 2.5rem;
+  }
+  
+  .banner-description {
+    font-size: 1.3rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .banner-overlay {
+    max-width: 75%;
+  }
+  
+  .banner-title {
+    font-size: 3rem;
+  }
+  
+  .banner-description {
+    font-size: 1.5rem;
+  }
+}

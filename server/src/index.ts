@@ -15,6 +15,7 @@ import profileRoutes from '@/routes/profileRoutes';
 import aiRoutes from '@/routes/aiRoutes';
 import uploadRoutes from '@/routes/uploadRoutes';
 import productsRoutes from '@/routes/productsRoutes';
+import bannerRoutes from '@/routes/bannerRoutes';
 
 const app = express();
 
@@ -72,6 +73,7 @@ app.use('/api/profile', profileRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/products', productsRoutes);
+app.use('/api/banners', bannerRoutes);
 
 app.get('/', (_req: Request, res: Response) => {
   res.json({

@@ -1,0 +1,132 @@
+.banner-table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.banner-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.banner-table th {
+  background: #f8f9fa;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.banner-table td {
+  padding: 12px;
+  border-bottom: 1px solid #dee2e6;
+  vertical-align: middle;
+}
+
+.banner-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.banner-image-cell {
+  width: 120px;
+}
+
+.banner-thumbnail {
+  width: 100px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+}
+
+.banner-status {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.banner-status.active {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.banner-status.inactive {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.banner-clickable {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.banner-clickable.yes {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.banner-clickable.no {
+  background-color: #f8f9fa;
+  color: #6c757d;
+}
+
+.banner-action {
+  max-width: 200px;
+  word-wrap: break-word;
+  font-size: 14px;
+  color: #495057;
+}
+
+.banner-dates {
+  font-size: 12px;
+  color: #6c757d;
+}
+
+.banner-dates div {
+  margin-bottom: 2px;
+}
+
+.banner-actions {
+  text-align: center;
+}
+
+.btn-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  font-size: 16px;
+}
+
+.btn-delete:hover {
+  background-color: #f8d7da;
+}
+
+.banner-table-loading,
+.banner-table-error,
+.banner-table-empty {
+  text-align: center;
+  padding: 40px;
+  color: #6c757d;
+  font-size: 16px;
+}
+
+.banner-table-error {
+  color: #dc3545;
+}
+
+.banner-table-empty {
+  color: #6c757d;
+  font-style: italic;
+}
